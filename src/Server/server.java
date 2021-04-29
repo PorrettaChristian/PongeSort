@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
@@ -52,9 +53,22 @@ public class server {
                 InputStream  is = client.getInputStream();
                 ObjectInputStream ois = new ObjectInputStream(is);
                 char [] c = (char[])ois.readObject();
-                System.out.println(c[0]);
+                System.out.println(c);
+                char [] ordine = new char[10];
+                for(int i=0;i<10;i++){
+                    int pos = (int)(Math.random()*9);
+                    if(c[pos]!='-'){
+                        ordine [i] = c [pos];
+                        c [pos] = '-';
+                    }
+                    System.out.print(ordine[i]);
+                }
                 ois.close();
                 client.close();
+                OutputStream out = client.getOutputStream();
+                ObjectOutputStream o = new ObjectOutputStream(out);
+                o.writeObject(ordine);
+                o.flush();
                 System.out.println("chiusura connessione effettuata.");
             }
         }
