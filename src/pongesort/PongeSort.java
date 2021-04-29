@@ -5,6 +5,8 @@
  */
 package pongesort;
 
+import Client.Client;
+
 /**
  *
  * @author porretta.christian
